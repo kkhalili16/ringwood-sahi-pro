@@ -1,0 +1,38 @@
+function addPost(){
+//Creat a new Post.
+_click(_div("Posts"));
+_click(_link("Add New[6]"));
+var $randomPost = "Title"+ _random(1000);
+_setValue(_textarea("post-title-0"),$randomPost);
+_keyPress(_textarea("post-title-0"), [13,13]);
+var $randomPost = "This is a paragraph for automation "+"Tiger "+"paragraph "+ $randomPost;
+var $parg = _paragraph("rich-text block-editor-rich-text__editable wp-block-paragraph");
+_setValue($parg,$randomPost);
+//////////////
+_wait(500);
+_click(_button("Publish…"));
+_click(_button("Publish"));
+_wait(1000);
+_click(_link("View Post[1]"));
+_wait(1000);
+//_navigateTo("http://localwebapp:8888/wordpress/wp-admin");
+//_click(_byXPath("//div[contains(text(),'Posts')]"));
+
+
+
+}
+
+
+function connectDB(){
+	
+try{
+var $mysql3  = _getDB("com.mysql.jdbc.Driver", 
+						  "jdbc:mysql://localhost:8888/test_db?allowMultiQueries=true&amp;sessionVariables=sql_mode=NO_BACKSLASH_ESCAPES&amp;zeroDateTimeBehavior=convertToNull", 
+			 "root", "root", false);
+	$mysql3.select("SELECT post_title from wp_posts where post_title ='Title700'");
+}catch($ex){
+	_log("Exception :" + $ex);
+	_assertNotEqual("", $ex);
+}
+	
+}

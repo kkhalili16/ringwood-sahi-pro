@@ -1,0 +1,71 @@
+function addToCart(){
+		_setValue(_textbox("q"), "1");
+		_setValue(_textbox("q[1]"), "2");
+		_setValue(_textbox("q[2]"), "1");
+		_click(_button("Add"));
+
+		var $book1a = _getText(_cell("Core Java"));
+		var $book1a_price = _getText(_cell("Rs. 300")).replace(/ /g, "");
+		var $book2a = _getText(_cell("Ruby for Rails"));
+		var $book2a_price = _getText(_cell("Rs. 200")).replace(/ /g, "");
+		var $book3a = _getText(_cell("Python Cookbook"));
+		var $book3a_price = _getText(_cell("Rs. 350")).replace(/ /g, "");
+		var $book1v = _getText(_cell("Core Java[1]"));
+		var $book2v = _getText(_cell("Ruby for Rails[1]"));
+		var $book3v = _getText(_cell("Python Cookbook[1]"));
+	    var $book1quantity = _getText(_cell("1"));
+		var $book2quantity = _getText(_cell("2"));
+		var $book3quantity = _getText(_cell("1[1]"));
+		var $book1_UnitCost = _getText(_cell(22));
+		var $book2_UnitCost = _getText(_cell(26));
+	    var $book3_UnitCost = _getText(_cell(30));
+	
+		var $unitcost1 = $book1_UnitCost.split('.');
+		var $book1_UnitCostStart = $unitcost1[0];
+		var $book1_UnitCostNum= $unitcost1[1];
+	
+		var $unitcost2 = $book2_UnitCost.split('.');
+		var $book2_UnitCostStart = $unitcost2[0];
+		var $book2_UnitCostNum= $unitcost2[1];
+	
+		var $unitcost3 = $book3_UnitCost.split('.');
+		var $book3_UnitCostStart = $unitcost3[0];
+		var $book3_UnitCostNum = $unitcost3[1];
+	
+		_assertEqual($book1a, $book1v);
+		_assertEqual($book2a, $book2v);
+		_assertEqual($book3a, $book3v);
+	
+	   _assertEqual($book1a_price, $book1_UnitCost );
+		_assertEqual($book2a_price, $book2_UnitCost );
+		_assertEqual($book3a_price, $book3_UnitCost );
+	
+		_assertEqual($book1quantity ,"1");
+		_assertEqual($book2quantity ,"2");
+		_assertEqual($book3quantity ,"1");
+	
+		var $book1TotalCost = _getText(_cell(23));
+		var $book2TotalCost = _getText(_cell(27));
+		var $book3TotalCost = _getText(_cell(31));
+	
+		var $total1 = $book1TotalCost.split('.');
+		var $total1Start = $total1[0];
+		var $total1Num = $total1[1];
+	
+		var $total2 = $book2TotalCost.split('.');
+		var $total2Start = $total2[0];
+		var $total2Num = $total2[1];
+	
+		var $total3 = $book3TotalCost.split('.');
+		var $total3Start = $total3[0];
+		var $total3Num = $total3[1];
+	
+		var $grandTotal = _getText(_textbox("total"));
+		_log($grandTotal);
+	
+		_assertEqual($book1quantity * $book1_UnitCostNum, $total1Num);
+		_assertEqual($book2quantity * $book2_UnitCostNum, $total2Num);
+		_assertEqual($book3quantity * $book3_UnitCostNum, $total3Num);
+
+		_assertEqual($grandTotal,parseInt($total1[1])+parseInt($total2[1])+parseInt($total3[1]));
+}

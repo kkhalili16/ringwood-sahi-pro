@@ -1,0 +1,42 @@
+function startQuiz(){
+	    _navigateTo("http://local.quiz.com:8888/school/messages/Quiz/quiz2.php");
+		var $btn_create = _byXPath("//div[@class='side2']//input[@id='create']");
+		var $quiz_header = _byXPath("//h1[contains(text(),'PHP Quiz')]");
+		var $estimatedTime = _getText(_byXPath("//li[contains(text(),'4 Minutes')]"));
+		var $numQuestions = _getText(_byXPath("//li[contains(text(),'2')]"));
+		
+	
+		_assertExists($quiz_header);
+
+		var $time =$estimatedTime;
+	    var $timeSplit = $time.slice(16,18);;
+		var $timeSplitNum = parseInt($timeSplit);
+	
+		var $Questions = $numQuestions;
+		var $QuestionsSplit = $Questions.slice(21,24);
+		var $QuestionsSplitNum = parseInt($QuestionsSplit);
+		 _assertEqual(parseInt($QuestionsSplit),parseInt($timeSplit)/ 2);
+		
+		if ($timeSplitNum / 2 == $QuestionsSplitNum){
+			_log("( Question number " + $QuestionsSplit+" )" + "	Equal	" + "( time " + $timeSplit  + " devided by 2 )");
+			_log("Pass")
+		}
+		_click(_byXPath("//a[@class='start']"));
+		_assertExists("//p[@class='question']");
+		
+	
+	
+		
+		 }
+
+function submitAnswers(){
+		  //  _navigateTo("http://local.quiz.com:8888/school/messages/Quiz/quiz2.php");
+			_click(_byXPath("//li[contains(text(),'1')]//input[@name='choice']"));
+			_wait(5000);
+			
+	
+	
+		
+
+
+}

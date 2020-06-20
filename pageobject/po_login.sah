@@ -1,0 +1,49 @@
+
+// login to Demo
+function login(){
+	_navigateTo("http://sahitest.com/demo/training/login.htm")
+	_setValue(_textbox("user"), "test");
+	_setValue(_password("password"), "secret");
+	_click(_submit("Login"));
+	_assertVisible(_heading2("All available books"));
+	_assertEqual(_getText(_cell("5")), "5");
+	_log("Number of books = " + _getText(_cell("5")));
+}
+
+// login to Quiz
+function loginToQuiz($url){
+		_navigateTo($url)
+		//wrong user name
+		_setValue(_byXPath("//input[@placeholder='User Name']"), "xyz");
+		_setValue(_byXPath("//input[@placeholder='Password']"), "123");
+		_click(_byXPath("//input[@name='login']"));
+		
+		//wrong password
+		_setValue(_byXPath("//input[@placeholder='User Name']"), "ahmad");
+		_setValue(_byXPath("//input[@placeholder='Password']"), "xyz");
+		_click(_byXPath("//input[@name='login']"));
+		//valid login
+		_setValue(_byXPath("//input[@placeholder='User Name']"), "ahmad");
+		_setValue(_byXPath("//input[@placeholder='Password']"), "123");
+		_click(_byXPath("//input[@name='login']"));
+}
+
+
+
+function invalidUsername(){
+	_navigateTo("http://sahitest.com/demo/training/login.htm")
+	_setValue(_textbox("user"), "xyz");
+	_setValue(_password("password"), "secret");
+	_click(_submit("Login"));
+	_assertVisible(_div("Invalid username or password"));
+	_assertEqual(_getText(_div("Invalid username or password")), "Invalid username or password");
+}
+	
+function invalidPassword(){
+	_navigateTo("http://sahitest.com/demo/training/login.htm")
+	_setValue(_textbox("user"), "test");
+	_setValue(_password("password"), "xyz");
+	_click(_submit("Login"));
+	_assertVisible(_div("Invalid username or password"));
+    _assertEqual(_getText(_div("Invalid username or password")), "Invalid username or password");
+}

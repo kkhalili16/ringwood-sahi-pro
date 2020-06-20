@@ -1,0 +1,112 @@
+function validLogin(){
+window.screen.availHeight - (window.outerHeight - window.innerHeight)
+
+_navigateTo("http://localwebapp:8888/wordpress/wp-admin");
+_setValue(_byXPath("//input[@id='user_login']"), "ahmad");
+_setValue(_byXPath("//input[@id='user_pass']"), "Ahm_19802002");
+_click(_byXPath("//input[@id='wp-submit']"));
+_assertExists(_byXPath("//a[contains(text(),'Howdy,')]"));	
+_assertVisible(_byXPath("//a[contains(text(),'Howdy,')]"));
+}
+
+
+var $list=[]; 
+var $listModify=[]; 
+
+function addPages( $value){
+	
+var $pages =_byXPath("//div[contains(text(),'Pages')]");
+var $addNew =_byXPath("//a[@class='page-title-action']");	
+var $addTitle =_byXPath("//textarea[@id='post-title-0']");
+var $publish =_byXPath("//button[@class='components-button editor-post-publish-panel__toggle editor-post-publish-button__button is-primary']");
+var $publishNext = _byXPath("//button[@class='components-button editor-post-publish-button editor-post-publish-button__button is-primary']");
+
+for ($i=0; $i < $value; $i++){
+var $newT = _random(1000000) + "-page name";	
+	
+_click($pages);
+_click($addNew);
+
+_setValue($addTitle, $newT);
+	
+_click($publish);
+_click($publishNext);
+_navigateTo("http://localwebapp:8888/wordpress/wp-admin");
+_click($pages);
+
+//var $actualTitle =_byXPath("//a[contains(text(),'"+$newT+"')]");
+var $actualTitle =_link($newT)
+_assertVisible($actualTitle);
+	
+$list.push($newT );
+
+}	
+var $checkboxes = _collect("_checkbox", "/.*/", _in(_byXPath("//tbody[@id='the-list']")));
+//_alert($checkboxes.length);
+_log($checkboxes.length);	
+
+}
+
+function modifyPages($value){
+for ($j=0; $j < $value; $j++){	
+var $newPages = _random(1000000) + "-new page";	
+$listModify.push($newPages);	
+
+var $pages =_byXPath("//div[contains(text(),'Pages')]");
+var $search = _byXPath("//input[@id='post-search-input']");
+_setValue($search,$list[$j]);
+_click(_link($list[$j]));
+	   
+
+	
+_focus(_textarea("post-title-0"));	
+_click(_textarea("post-title-0"));
+_setValue(_textarea("post-title-0"),"");
+_setValue(_textarea("post-title-0"),$newPages);
+	
+///////////
+	
+	
+_click(_div("block-editor-writing-flow__click-redirect"));
+_focus(_textarea("post-title-0"));
+_click(_button("Edit"));
+_setValue(_byXPath("//input[@class='editor-post-permalink-editor__edit']"),"");
+_setValue(_byXPath("//input[@class='editor-post-permalink-editor__edit']"),$newPages);
+_keyPress(_textbox("Edit post permalink"), [13,13]);
+
+_click(_button("Update"));
+	
+_navigateTo("http://localwebapp:8888/wordpress/wp-admin");	
+_click($pages);
+
+var $actualTitle =_link($newPages);
+_assertVisible($actualTitle);
+
+	
+
+
+
+
+}
+
+_log($listModify);
+$list = [];
+}
+
+
+
+function deletePages(){		
+	
+for ($j=0; $j < $listModify.length; $j++){
+var $search = _byXPath("//input[@id='post-search-input']");
+_setValue($search,$listModify[$j]);
+_click(_submit("Search Pages"));
+_isVisible(_link($listModify[$j]));
+
+	_click(_checkbox("post[]"));
+	_setSelected(_select("action"), "Move to Trash");
+	_click(_submit("Apply[1]"));
+
+}
+	
+}
