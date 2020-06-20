@@ -1,0 +1,13 @@
+_includeOnce("../../ringwood/pageobject/po_login.sah");
+_includeOnce("../../ringwood/pageobject/po_quiz.sah");
+
+	try{
+			var $url="http://local.quiz.com:8888/school/login/pdo_login.php";
+		
+            loginToQuiz($url);
+			startQuiz();
+			screenshot();
+			submitAnswers();
+		}
+		catch($e){
+		}

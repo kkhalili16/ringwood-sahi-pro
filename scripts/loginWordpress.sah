@@ -1,0 +1,13 @@
+_includeOnce("../../ringwood/pageobject/po_wordpress.sah");
+
+
+	try{
+		$value = 2;
+	validLogin();	
+	addPages($value);
+	modifyPages($value);
+	deletePages();
+		
+		}
+		catch($e){
+		}
