@@ -23,19 +23,3 @@ _wait(1000);
 }
 
 
-function connectDB(){
-	
-try{
-var $mysql3  = _getDB("com.mysql.jdbc.Driver", 
-						  "jdbc:mysql://localhost:8888/test_db?allowMultiQueries=true&amp;sessionVariables=sql_mode=NO_BACKSLASH_ESCAPES&amp;zeroDateTimeBehavior=convertToNull", 
-			 "root", "root", false);
-	$mysql3.select("SELECT post_title from wp_posts where post_title ='Title700'");
-}catch($ex){
-	_log("Exception :" + $ex);
-	_assertNotEqual("", $ex);
-}
-	
-}
-
-// This is a new line
-//this is second line

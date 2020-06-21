@@ -2,9 +2,9 @@ _includeOnce("../../ringwood/pageobject/po_wordpress.sah");
 _includeOnce("../../ringwood/pageobject/po_postWordpress.sah");
 
 	try{
-			//validLogin();	
-			//addPost();
-			connectDB();
+			validLogin();	
+			addPost();
+			
 		
 		
 		}
